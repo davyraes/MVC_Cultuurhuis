@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +88,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -152,7 +162,41 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BestaatnognietAttribute.cs" />
+    <Compile Include="Models\Cultuur.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cultuur.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cultuur.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cultuur.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cultuur.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cultuur.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Genre.cs">
+      <DependentUpon>Cultuur.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Klant.cs">
+      <DependentUpon>Cultuur.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MandjeItem.cs" />
+    <Compile Include="Models\Reservatie.cs">
+      <DependentUpon>Cultuur.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\NieuweKlantViewModel.cs" />
+    <Compile Include="Models\ViewModels\VoorstellingenViewModel.cs" />
+    <Compile Include="Models\Voorstelling.cs">
+      <DependentUpon>Cultuur.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VoorstellingProperties.cs" />
+    <Compile Include="Models\VoorstellingUitbreiding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CultuurService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -161,12 +205,49 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bevestig.png" />
+    <Content Include="Images\biertempel.png" />
+    <Content Include="Images\default.jpg" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\eigendom.png" />
+    <Content Include="Images\francais.png" />
+    <Content Include="Images\gehuurd.png" />
+    <Content Include="Images\kruisdistel.jpg" />
+    <Content Include="Images\mandje.png" />
+    <Content Include="Images\nederlands.png" />
+    <Content Include="Images\nieuweklant.png" />
+    <Content Include="Images\reserveren.png" />
+    <Content Include="Images\rhododendron.jpg" />
+    <Content Include="Images\sering.jpg" />
+    <Content Include="Images\ster.png" />
+    <Content Include="Images\tuincentrum.png" />
+    <Content Include="Images\videoVerhuur.jpg" />
+    <Content Include="Images\voorstellingen.png" />
+    <Content Include="Images\vuurdoorn.jpg" />
+    <Content Include="Models\Cultuur.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Cultuur.Context.cs</LastGenOutput>
+      <DependentUpon>Cultuur.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Cultuur.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Cultuur.edmx</DependentUpon>
+      <LastGenOutput>Cultuur.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\Cultuur.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Cultuur.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Cultuur.edmx.diagram">
+      <DependentUpon>Cultuur.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -194,10 +275,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Reserveren.cshtml" />
+    <Content Include="Views\Home\Mandje.cshtml" />
+    <Content Include="Views\Home\Bevestiging.cshtml" />
+    <Content Include="Views\Home\Nieuw.cshtml" />
+    <Content Include="Views\Home\Overzicht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -206,6 +291,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

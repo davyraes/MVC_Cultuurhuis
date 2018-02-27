@@ -1,31 +1,81 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model MVC_Cultuurhuis.Models.ViewModels.VoorstellingenViewModel
+@{
+    ViewBag.Title = "Index";
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Het Cultuurhuis <img src="~/Images/voorstellingen.png" alt="voorstellingen"/></h1>
+    <p>@if (ViewBag.mandjeTonen)
+    {
+        <a href="@Url.Action("Mandje","Home")" class="btn btn-primary btn-lg">Winkelmandje &raquo;</a>
+        <a href="@Url.Action("Bevestiging","Home")" class="btn btn-primary btn-lg">Kassa &raquo;</a>
+    }
+    </p>
 </div>
+@if(Model.Genre==null)
+{
+    <p class="lead alert alert-info">Kies een voorstellingsgenre</p>
+}
+<ul class="nav nav-pills">
+    @foreach(var genre in Model.Genres)
+    {
+        var url = Url.Action("Index", "Home", new { id = genre.GenreNr });
+        if(Model.Genre!= null && Model.Genre.GenreNaam.Equals(genre.GenreNaam))
+        {
+            <li class="active"><a href="@url">@genre.GenreNaam</a></li>
+        }
+        else
+        {
+            <li>
+                <a href="@url">@genre.GenreNaam</a>
+            </li>
+        }
+    }
+</ul>
+@if (Model.Genre != null)
+{
+    <br />
+    if (Model.Voorstellingen.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Titel</th>
+                    <th>Uitvoerders</th>
+                    <th class="rechts">Prijs</th>
+                    <th class="rechts">Vrije Plaatsen</th>
+                    <th>Reserveren</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var voorstelling in Model.Voorstellingen)
+                {
+                    <tr>
+                        <td class="col-md-2">@Html.DisplayFor(m => voorstelling.Datum)</td>
+                        <td class="col-md-3">@voorstelling.Titel</td>
+                        <td class="col-md-3">@voorstelling.Uitvoerders</td>
+                        <td class="col-md-1 rechts">@Html.DisplayFor(m => voorstelling.Prijs)</td>
+                        <td class="col-md-2 rechts">@voorstelling.VrijePlaatsen</td>
+                        @if (voorstelling.VrijePlaatsen > 0)
+                        {
+                            var urlReserveren = Url.Action("Reserveren", "Home", new { id = voorstelling.VoorstellingsNr });
+                            <td class="col-md-1"><a href="@urlReserveren">Reserveren</a></td>
+                        }
+                        else
+                        {
+                            <td class="col-md-1"><span class="label label-danger">Uitverkocht</span></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    else
+    {
+    <p class="alert alert-warning">
+        Er zijn geen voorstellingen van dit genre beschikbaar
+    </p>
+    }
+}

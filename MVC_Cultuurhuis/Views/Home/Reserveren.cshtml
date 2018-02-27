@@ -1,0 +1,66 @@
+﻿@model MVC_Cultuurhuis.Models.Voorstelling
+
+@{
+    ViewBag.Title = "Reserveren";
+}
+
+<div class="jumbotron">
+    <h1>Het Cultuurhuis <img src="~/Images/reserveren.png" alt="reserveren" /></h1>
+    <p><a href="@Url.Action("Index","Home")" class="btn btn-primary btn-lg">Tickets kiezen &raquo;</a></p>
+</div>
+<p class="lead alert alert-info">
+    Aantal tickets voor deze voorstelling
+</p>
+<form class="form-horizontal" method="post"
+      action="~/Home/Reserveer/@Model.VoorstellingsNr">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Voorstelling</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Titel</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Uitvoerders</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Uitvoerders</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Datum</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Html.DisplayFor(m => m.Datum)</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Prijs</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Html.DisplayFor(m => m.Prijs)</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vrije plaatsen</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.VrijePlaatsen</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Plaatsen</label>
+        @{ 
+            var aantal = 1;
+            if (Session[Model.VoorstellingsNr.ToString()]!=null)
+            {
+                aantal = Convert.ToInt16(Session[Model.VoorstellingsNr.ToString()]);
+            }
+        }
+        <div class="col-md-10">
+            <input value="@aantal" required="required" min="1" type="number"
+                   max="@Model.VrijePlaatsen" name="aantalPlaatsen"
+                   class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input value="Reserveren" type="submit" class="btn btn-default" />
+        </div>
+    </div>
+</form>

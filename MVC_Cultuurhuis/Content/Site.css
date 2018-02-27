@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+.rechts{
+    text-align:right;
+    padding-right:2em;
+}
+.field-validation-error{color:#ff0000;}
+.field-validation-valid{display:none;}
+.input-validation-error{border:1px solid #ff0000; background-color:#ffeeee;}
+.inline-block{display:inline-block;}
+.validation-message{font-style:italic;padding-left:1em;}

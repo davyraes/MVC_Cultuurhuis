@@ -1,0 +1,110 @@
+﻿@model MVC_Cultuurhuis.Models.ViewModels.NieuweKlantViewModel
+@{
+    ViewBag.Title = "Nieuw";
+}
+<div class="jumbotron">
+<h1>Het Cultuurhuis <img src="~/Images/nieuweklant.png" alt="nieuwe klant" /></h1>
+<p>
+    <a href="@Url.Action("Index", "Home")"
+       class="btn btn-primary btn-lg">Tickets kiezen &raquo;</a>
+    <a href="@Url.Action("Mandje", "Home")"
+       class="btn btn-primary btn-lg">Winkelmandje &raquo;</a>
+    <a href="@Url.Action("Bevestiging", "Home")"
+       class="btn btn-primary btn-lg">Kassa &raquo;</a>
+</p>
+</div>
+<p class="lead alert alert-info">Vul jouw gegevens in</p>
+@using (Html.BeginForm("Nieuw", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        <div class="col-md-2 control-label">@Html.LabelFor(m => m.Voornaam)</div>
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Voornaam,
+new { htmlAttributes = new { @class = "form-control inline-block" } })
+            @Html.ValidationMessageFor(m => m.Voornaam, string.Empty,
+new { @class = "validation-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label">@Html.LabelFor(m => m.Familienaam)</div>
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Familienaam,
+new { htmlAttributes = new { @class = "form-control inline-block" } })
+            @Html.ValidationMessageFor(m => m.Familienaam, string.Empty,
+new { @class = "validation-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label">@Html.LabelFor(m => m.Straat)</div>
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Straat,
+new { htmlAttributes = new { @class = "form-control inline-block" } })
+            @Html.ValidationMessageFor(m => m.Straat, string.Empty,
+new { @class = "validation-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label">@Html.LabelFor(m => m.Huisnr)</div>
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Huisnr,
+new { htmlAttributes = new { @class = "form-control inline-block" } })
+            @Html.ValidationMessageFor(m => m.Huisnr, string.Empty,
+new { @class = "validation-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label">@Html.LabelFor(m => m.Postcode)</div>
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Postcode,
+new { htmlAttributes = new { @class = "form-control inline-block" } })
+            @Html.ValidationMessageFor(m => m.Postcode, string.Empty,
+new { @class = "validation-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label">@Html.LabelFor(m => m.Gemeente)</div>
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Gemeente,
+new { htmlAttributes = new { @class = "form-control inline-block" } })
+            @Html.ValidationMessageFor(m => m.Gemeente, string.Empty,
+new { @class = "validation-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label">
+            @Html.LabelFor(m => m.Gebruikersnaam)
+    </div>
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.Gebruikersnaam,
+ new { htmlAttributes = new { @class = "form-control inline-block" } })
+        @Html.ValidationMessageFor(m => m.Gebruikersnaam, string.Empty,
+ new { @class = "validation-message" })
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-2 control-label">@Html.LabelFor(m => m.Paswoord)</div>
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.Paswoord,
+ new { htmlAttributes = new { @class = "form-control inline-block" } })
+        @Html.ValidationMessageFor(m => m.Paswoord, string.Empty,
+ new { @class = "validation-message" })
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-2 control-label">
+        @Html.LabelFor(m => m.HerhaalPaswoord)
+</div>
+<div class="col-md-10">
+    @Html.EditorFor(m => m.HerhaalPaswoord,
+    new { htmlAttributes = new { @class = "form-control inline-block" } })
+    @Html.ValidationMessageFor(m => m.HerhaalPaswoord, string.Empty,
+    new { @class = "validation-message" })
+</div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input name="toevoegen" type="submit" value="Registreer me"
+               class="btn btn-primary" />
+    </div>
+</div>
+}

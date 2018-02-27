@@ -1,0 +1,69 @@
+﻿@using MVC_Cultuurhuis.Models;
+    @{
+        ViewBag.Title = "Overzicht";
+    }
+<div class="jumbotron">
+    <h1>
+        Het Cultuurhuis <img src="~/Images/bevestig.png" alt="bevestiging" />
+    </h1>
+    <p>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+            Tickets
+            kiezen &raquo;
+        </a>
+    </p>
+</div>
+@if ((ViewBag.gelukt as ICollection<MandjeItem>).Count() > 0)
+{
+    <h2 class="alert alert-success">Gelukte reserveringen</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Titel</th>
+                <th>Uitvoerders</th>
+                <th>Prijs</th>
+                <th>Plaatsen</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MandjeItem item in ViewBag.gelukt)
+            {
+                <tr>
+                    <td class="col-md-2">@Html.DisplayFor(m => item.Datum)</td>
+                    <td class="col-md-3">@item.Titel</td>
+                    <td class="col-md-3">@item.Uitvoerders</td>
+                    <td class="col-md-2">@Html.DisplayFor(m => item.Prijs)</td>
+                    <td class="col-md-2">@item.Plaatsen</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} 
+@if ((ViewBag.mislukt as ICollection<MandjeItem>).Count() > 0)
+{
+    <h2 class="alert alert-danger">Mislukte reserveringen</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Titel</th>
+                <th>Uitvoerders</th>
+                <th>Prijs</th>
+                <th>Plaatsen</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MandjeItem item in ViewBag.mislukt)
+            {
+                <tr>
+                    <td class="col-md-2">@Html.DisplayFor(m => item.Datum)</td>
+                    <td class="col-md-3">@item.Titel</td>
+                    <td class="col-md-3">@item.Uitvoerders</td>
+                    <td class="col-md-2">@Html.DisplayFor(m => item.Prijs)</td>
+                    <td class="col-md-2">@item.Plaatsen</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

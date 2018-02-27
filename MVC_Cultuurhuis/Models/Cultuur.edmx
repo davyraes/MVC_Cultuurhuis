@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CultuurHuisMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="GenreNr" />
+          </Key>
+          <Property Name="GenreNr" Type="int" Nullable="false" />
+          <Property Name="Genre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Klanten">
+          <Key>
+            <PropertyRef Name="KlantNr" />
+          </Key>
+          <Property Name="KlantNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Voornaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familienaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Straat" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HuisNr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gemeente" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GebruikersNaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Paswoord" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservaties">
+          <Key>
+            <PropertyRef Name="ReservatieNr" />
+          </Key>
+          <Property Name="ReservatieNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlantNr" Type="int" Nullable="false" />
+          <Property Name="VoorstellingsNr" Type="int" Nullable="false" />
+          <Property Name="Plaatsen" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Voorstellingen">
+          <Key>
+            <PropertyRef Name="VoorstellingsNr" />
+          </Key>
+          <Property Name="VoorstellingsNr" Type="int" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Uitvoerders" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
+          <Property Name="GenreNr" Type="int" Nullable="false" />
+          <Property Name="Prijs" Type="money" Nullable="false" />
+          <Property Name="VrijePlaatsen" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Reservaties_Klanten">
+          <End Role="Klanten" Type="Self.Klanten" Multiplicity="1" />
+          <End Role="Reservaties" Type="Self.Reservaties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klanten">
+              <PropertyRef Name="KlantNr" />
+            </Principal>
+            <Dependent Role="Reservaties">
+              <PropertyRef Name="KlantNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservaties_Voorstellingen">
+          <End Role="Voorstellingen" Type="Self.Voorstellingen" Multiplicity="1" />
+          <End Role="Reservaties" Type="Self.Reservaties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voorstellingen">
+              <PropertyRef Name="VoorstellingsNr" />
+            </Principal>
+            <Dependent Role="Reservaties">
+              <PropertyRef Name="VoorstellingsNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voorstellingen_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="Voorstellingen" Type="Self.Voorstellingen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenreNr" />
+            </Principal>
+            <Dependent Role="Voorstellingen">
+              <PropertyRef Name="GenreNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CultuurHuisMVCModelStoreContainer">
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Klanten" EntityType="Self.Klanten" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservaties" EntityType="Self.Reservaties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voorstellingen" EntityType="Self.Voorstellingen" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Reservaties_Klanten" Association="Self.FK_Reservaties_Klanten">
+            <End Role="Klanten" EntitySet="Klanten" />
+            <End Role="Reservaties" EntitySet="Reservaties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservaties_Voorstellingen" Association="Self.FK_Reservaties_Voorstellingen">
+            <End Role="Voorstellingen" EntitySet="Voorstellingen" />
+            <End Role="Reservaties" EntitySet="Reservaties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voorstellingen_Genres" Association="Self.FK_Voorstellingen_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Voorstellingen" EntitySet="Voorstellingen" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CultuurHuisMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenreNr" />
+          </Key>
+          <Property Name="GenreNr" Type="Int32" Nullable="false" />
+          <Property Name="GenreNaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Voorstellingen" Relationship="Self.FK_Voorstellingen_Genres" FromRole="Genres" ToRole="Voorstellingen" />
+        </EntityType>
+        <EntityType Name="Klant">
+          <Key>
+            <PropertyRef Name="KlantNr" />
+          </Key>
+          <Property Name="KlantNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familienaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Straat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HuisNr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Postcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GebruikersNaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Paswoord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Reservaties" Relationship="Self.FK_Reservaties_Klanten" FromRole="Klanten" ToRole="Reservaties" />
+        </EntityType>
+        <EntityType Name="Reservatie">
+          <Key>
+            <PropertyRef Name="ReservatieNr" />
+          </Key>
+          <Property Name="ReservatieNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlantNr" Type="Int32" Nullable="false" />
+          <Property Name="VoorstellingsNr" Type="Int32" Nullable="false" />
+          <Property Name="Plaatsen" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Klant" Relationship="Self.FK_Reservaties_Klanten" FromRole="Reservaties" ToRole="Klanten" />
+          <NavigationProperty Name="Voorstelling" Relationship="Self.FK_Reservaties_Voorstellingen" FromRole="Reservaties" ToRole="Voorstellingen" />
+        </EntityType>
+        <EntityType Name="Voorstelling">
+          <Key>
+            <PropertyRef Name="VoorstellingsNr" />
+          </Key>
+          <Property Name="VoorstellingsNr" Type="Int32" Nullable="false" />
+          <Property Name="Titel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Uitvoerders" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GenreNr" Type="Int32" Nullable="false" />
+          <Property Name="Prijs" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="VrijePlaatsen" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Voorstellingen_Genres" FromRole="Voorstellingen" ToRole="Genres" />
+          <NavigationProperty Name="Reservaties" Relationship="Self.FK_Reservaties_Voorstellingen" FromRole="Voorstellingen" ToRole="Reservaties" />
+        </EntityType>
+        <Association Name="FK_Voorstellingen_Genres">
+          <End Role="Genres" Type="CultuurHuisMVCModel.Genre" Multiplicity="1" />
+          <End Role="Voorstellingen" Type="CultuurHuisMVCModel.Voorstelling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenreNr" />
+            </Principal>
+            <Dependent Role="Voorstellingen">
+              <PropertyRef Name="GenreNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservaties_Klanten">
+          <End Role="Klanten" Type="CultuurHuisMVCModel.Klant" Multiplicity="1" />
+          <End Role="Reservaties" Type="CultuurHuisMVCModel.Reservatie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klanten">
+              <PropertyRef Name="KlantNr" />
+            </Principal>
+            <Dependent Role="Reservaties">
+              <PropertyRef Name="KlantNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservaties_Voorstellingen">
+          <End Role="Voorstellingen" Type="CultuurHuisMVCModel.Voorstelling" Multiplicity="1" />
+          <End Role="Reservaties" Type="CultuurHuisMVCModel.Reservatie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voorstellingen">
+              <PropertyRef Name="VoorstellingsNr" />
+            </Principal>
+            <Dependent Role="Reservaties">
+              <PropertyRef Name="VoorstellingsNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CultuurHuisMVCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Genres" EntityType="CultuurHuisMVCModel.Genre" />
+          <EntitySet Name="Klanten" EntityType="CultuurHuisMVCModel.Klant" />
+          <EntitySet Name="Reservaties" EntityType="CultuurHuisMVCModel.Reservatie" />
+          <EntitySet Name="Voorstellingen" EntityType="CultuurHuisMVCModel.Voorstelling" />
+          <AssociationSet Name="FK_Voorstellingen_Genres" Association="Self.FK_Voorstellingen_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Voorstellingen" EntitySet="Voorstellingen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservaties_Klanten" Association="Self.FK_Reservaties_Klanten">
+            <End Role="Klanten" EntitySet="Klanten" />
+            <End Role="Reservaties" EntitySet="Reservaties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservaties_Voorstellingen" Association="Self.FK_Reservaties_Voorstellingen">
+            <End Role="Voorstellingen" EntitySet="Voorstellingen" />
+            <End Role="Reservaties" EntitySet="Reservaties" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CultuurHuisMVCModelStoreContainer" CdmEntityContainer="CultuurHuisMVCEntities">
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="CultuurHuisMVCModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="GenreNr" ColumnName="GenreNr" />
+                <ScalarProperty Name="GenreNaam" ColumnName="Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klanten">
+            <EntityTypeMapping TypeName="CultuurHuisMVCModel.Klant">
+              <MappingFragment StoreEntitySet="Klanten">
+                <ScalarProperty Name="KlantNr" ColumnName="KlantNr" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="Familienaam" ColumnName="Familienaam" />
+                <ScalarProperty Name="Straat" ColumnName="Straat" />
+                <ScalarProperty Name="HuisNr" ColumnName="HuisNr" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Gemeente" ColumnName="Gemeente" />
+                <ScalarProperty Name="GebruikersNaam" ColumnName="GebruikersNaam" />
+                <ScalarProperty Name="Paswoord" ColumnName="Paswoord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservaties">
+            <EntityTypeMapping TypeName="CultuurHuisMVCModel.Reservatie">
+              <MappingFragment StoreEntitySet="Reservaties">
+                <ScalarProperty Name="ReservatieNr" ColumnName="ReservatieNr" />
+                <ScalarProperty Name="KlantNr" ColumnName="KlantNr" />
+                <ScalarProperty Name="VoorstellingsNr" ColumnName="VoorstellingsNr" />
+                <ScalarProperty Name="Plaatsen" ColumnName="Plaatsen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voorstellingen">
+            <EntityTypeMapping TypeName="CultuurHuisMVCModel.Voorstelling">
+              <MappingFragment StoreEntitySet="Voorstellingen">
+                <ScalarProperty Name="VoorstellingsNr" ColumnName="VoorstellingsNr" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Uitvoerders" ColumnName="Uitvoerders" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="GenreNr" ColumnName="GenreNr" />
+                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+                <ScalarProperty Name="VrijePlaatsen" ColumnName="VrijePlaatsen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
